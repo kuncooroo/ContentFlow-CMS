@@ -1,0 +1,65 @@
+<div class="mx-auto max-w-4xl space-y-6">
+@if ($showPublishingActions && $page)
+        @include('livewire.admin.pages.publishing', ['page' => $page])
+    @else
+        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+            <p class="text-sm text-slate-600">
+                Status:
+                <span class="font-medium text-slate-900">{{ $statusLabel }}</span>
+            </p>
+        </div>
+    @endif
+
+    <form wire:submit="save" class="space-y-6 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <div>
+            <label for="title" class="block text-sm font-medium text-slate-700">Title</label>
+            <input
+                id="title"
+                type="text"
+                wire:model.live="title"
+                class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+            >
+            @error('title')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="slug" class="block text-sm font-medium text-slate-700">Slug</label>
+            <input
+                id="slug"
+                type="text"
+                wire:model.live="slug"
+                class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+            >
+            @error('slug')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="content" class="block text-sm font-medium text-slate-700">Body</label>
+            <textarea
+                id="content"
+                wire:model="content"
+                rows="12"
+                class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+            ></textarea>
+            @error('content')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        @include('livewire.admin.partials.seo-fields')
+
+        <div class="flex items-center justify-between">
+            <a href="{{ route('admin.pages.index') }}" class="text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+            <button
+                type="submit"
+                class="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+            >
+                {{ $submitLabel }}
+            </button>
+        </div>
+    </form>
+</div>

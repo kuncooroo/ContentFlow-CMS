@@ -1,0 +1,29 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Category;
+use App\Support\Slugs\UniqueSlug;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Category>
+ */
+class CategoryFactory extends Factory
+{
+    protected $model = Category::class;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        $name = fake()->unique()->words(2, true);
+
+        return [
+            'name' => ucfirst($name),
+            'slug' => app(UniqueSlug::class)->generateForCategory($name),
+            'description' => fake()->optional()->sentence(),
+        ];
+    }
+}
